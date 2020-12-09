@@ -1,0 +1,4 @@
+*.o
+bin
+result
+npbparams.h

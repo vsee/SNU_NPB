@@ -78,8 +78,8 @@ FLINKFLAGS = -O3 -mcmodel=medium
 #---------------------------------------------------------------------------
 # This is the C compiler used for C programs
 #---------------------------------------------------------------------------
-#CC = gcc
-CC = /media/vseeker/seagate/workspace/llvm-project/build/bin/clang
+CC = gcc
+#CC = /media/vseeker/seagate/workspace/llvm-project/build/bin/clang
 
 #---------------------------------------------------------------------------
 # This links C programs; usually the same as ${CC}

@@ -78,8 +78,8 @@ FLINKFLAGS = -O3 -mcmodel=medium
 #---------------------------------------------------------------------------
 # This is the C compiler used for C programs
 #---------------------------------------------------------------------------
-CC = gcc
-#CC = /media/vseeker/seagate/workspace/llvm-project/build/bin/clang
+#CC = gcc
+CC = /media/vseeker/seagate/workspace/llvm-project/build/bin/clang
 
 #---------------------------------------------------------------------------
 # This links C programs; usually the same as ${CC}
@@ -111,7 +111,7 @@ C_INC = -I../common
 # _LARGEFILE64_SOURCE - are standard compiler flags which allow to work with 
 # files larger than 2GB.
 #---------------------------------------------------------------------------
-CFLAGS	= -g -Wall -O3 -mcmodel=medium
+CFLAGS	= -g -Wall -O3 -mcmodel=medium -mllvm -debug-only=auto2 -mllvm -unroll-threshold=10
 
 #---------------------------------------------------------------------------
 # Global *link time* flags. Flags for increasing maximum executable 

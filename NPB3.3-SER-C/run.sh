@@ -13,10 +13,10 @@ mkdir -p result
 #    end
 #end
 
-foreach benchmark ( ft mg cg lu bt is ep sp )
+foreach benchmark ( ft )
     foreach class ( S )
-        echo "compiling $benchmark.$class. (SER-C)"
-        make $benchmark CLASS=$class
+        echo "running $benchmark.$class. (SER-C)"
+        bin/$benchmark.$class.x > result/$benchmark.$class.out
         echo "done.\n"
     end
 end

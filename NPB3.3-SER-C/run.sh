@@ -17,6 +17,13 @@ foreach benchmark ( sp )
     foreach class ( S )
         echo "running $benchmark.$class. (SER-C)"
         bin/$benchmark.$class.x > result/$benchmark.$class.out
+
+        set RUN_STATUS=$status
+
+        if ( $RUN_STATUS != 0 ) then
+            exit $RUN_STATUS
+        endif
+
         echo "done.\n"
     end
 end

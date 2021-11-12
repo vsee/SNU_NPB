@@ -1,13 +1,8 @@
 #!/bin/bash
 
-VAN=/home/vseeker/workspace/llvm/install/bin
-MOD=/media/vseeker/seagate/llvm/auto2tune/instrumented/bin
+source env.config
 
 VCLANG=${VAN}/clang
-
-VOPT=${VAN}/opt
-MOPT=${MOD}/opt
-
 VLINK=${VAN}/llvm-link
 
 HOME=../../NPB3.3-SER-C

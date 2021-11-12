@@ -1,3 +1,4 @@
 bin
 bc_out
 build
+env.config

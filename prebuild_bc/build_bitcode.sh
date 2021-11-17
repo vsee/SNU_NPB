@@ -9,7 +9,8 @@ HOME=../../NPB3.3-SER-C
 SYS=$HOME/sys
 COMMON=$HOME/common
 
-CFLAGS="-O0 -g0 -fno-crash-diagnostics -Wall -mcmodel=medium"
+CFLAGS="-O0 -g0 -Xclang -disable-O0-optnone -fno-crash-diagnostics -Wall -mcmodel=medium"
+
 
 BLD=`pwd`/build
 OUT=`pwd`/bc_out

@@ -16,7 +16,7 @@ LFLAGS="-mcmodel=medium -lm"
 # build binary versions using modified optimiser and extension
 BIN=`pwd`/auto2_bins
 mkdir -p $BIN
-OPT_FLAGS="-unroll-threshold=10 -load /media/vseeker/seagate/auto2_dist_out/eval_run_0_2021-11-17_11-04-48/worker_output/PATH_WORKER_1/probe_out_1637147724/libextension.so"
+OPT_FLAGS="-load /media/vseeker/seagate/auto2_dist_out/eval_run_0_2021-12-01_16-35-33/worker_output/PATH_WORKER_1/probe_out_1638376537/libextension.so"
 
 for t in $TARGETS; do
     $MOPT $OPT_FLAGS $BCS/$t.S.bc -o $BCS/${t}_opt.S.bc -Oz
@@ -28,7 +28,7 @@ done
 # build binary versions using vanilla optimiser
 BIN=`pwd`/vanilla_bins
 mkdir -p $BIN
-OPT_FLAGS="-unroll-threshold=10"
+OPT_FLAGS=""
 
 for t in $TARGETS; do
     $VOPT $OPT_FLAGS $BCS/$t.S.bc -o $BCS/${t}_opt.S.bc -Oz

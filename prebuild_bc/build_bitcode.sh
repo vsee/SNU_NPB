@@ -67,7 +67,8 @@ build_benchmark bt \
      set_constants.c adi.c  rhs.c
      x_solve.c y_solve.c solve_subs.c
      z_solve.c add.c error.c verify.c" \
-    "print_results.bc c_timers.bc wtime.bc"
+    "c_timers.bc wtime.bc" \
+    #"print_results.bc"
 
 build_benchmark ep \
     $HOME/EP \

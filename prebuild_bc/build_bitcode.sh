@@ -10,7 +10,7 @@ SYS=$HOME/sys
 COMMON=$HOME/common
 
 CFLAGS="-O0 -g0 -Xclang -disable-O0-optnone -fno-crash-diagnostics -Wall -mcmodel=medium"
-
+CFLAGS_OPT="-Oz -fno-crash-diagnostics -Wall -mcmodel=medium"
 
 BLD=`pwd`/build
 OUT=`pwd`/bc_out
@@ -37,6 +37,9 @@ function build_benchmark {
     DIR=$2
     SRC=$3
     CMN=$4
+    VFY=$5
+
+    echo "Building bitcode for $NAME"
 
     cd $DIR
     $SYS/setparams $NAME S
@@ -49,6 +52,12 @@ function build_benchmark {
     BC=${SRC//\.c/\.bc}
     
     $VLINK $BC $CMN -o $OUT/$NAME.S.bc
+
+    if [[ ! -z $VFY ]]; then
+        TARGET=$OUT/${NAME}_verify.S.o
+        echo "Building external verification $TARGET"
+        $VCLANG $CFLAGS_OPT -c $DIR/$VFY -o $TARGET
+    fi
 }
 
 build_benchmark mg \
@@ -67,8 +76,8 @@ build_benchmark bt \
      set_constants.c adi.c  rhs.c
      x_solve.c y_solve.c solve_subs.c
      z_solve.c add.c error.c verify.c" \
-    "c_timers.bc wtime.bc" \
-    #"print_results.bc"
+    "c_timers.bc wtime.bc print_results.bc" \
+    "auto2_verify.c"
 
 build_benchmark ep \
     $HOME/EP \

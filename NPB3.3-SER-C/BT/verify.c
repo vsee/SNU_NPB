@@ -35,6 +35,8 @@
 #include <math.h>
 #include "header.h"
 
+void auto2_verify(char *Class, double dt, double xce[5], double xcr[5]);
+
 //---------------------------------------------------------------------
 // verification routine                         
 //---------------------------------------------------------------------
@@ -279,82 +281,67 @@ void verify(int no_time_steps, char *Class, logical *verified)
     xcedif[m] = fabs((xce[m]-xceref[m])/xceref[m]);
   }
 
-  // AUTO2
-  // print xcr and xce as result vectors as well as dt
-  // in external verification known variables: epsilon, xcrref and xceref vectors as well as dtref
-  // get rid of all code except that stuff that you need to generate the output vectors (xcr and xce)
-  printf("AUTO2_START\n");
-  printf("xcr\n");
-  for (m = 0; m < 5; m++) {
-    printf("%20.13E\n", xcr[m]);
-  }
-  printf("xce\n");
-  for (m = 0; m < 5; m++) {
-    printf("%20.13E\n", xce[m]);
-  }
-  printf("dt\n");
-  printf("%15.8E\n", dt);
-  printf("AUTO2_END\n");
-
-  //---------------------------------------------------------------------
+  // ---------------------------------------------------------------------
   // Output the comparison of computed results to known cases.
-  //---------------------------------------------------------------------
-  // if (*Class != 'U') {
-  //   printf(" Verification being performed for class %c\n", *Class);
-  //   printf(" accuracy setting for epsilon = %20.13E\n", epsilon);
-  //   *verified = (fabs(dt-dtref) <= epsilon);
-  //   if (!(*verified)) {  
-  //     *Class = 'U';
-  //     printf(" DT does not match the reference value of %15.8E\n", dtref);
-  //   }
-  // } else { 
-  //   printf(" Unknown class\n");
-  // }
+  // ---------------------------------------------------------------------
+  if (*Class != 'U') {
+    printf(" Verification being performed for class %c\n", *Class);
+    printf(" accuracy setting for epsilon = %20.13E\n", epsilon);
+    *verified = (fabs(dt-dtref) <= epsilon);
+    if (!(*verified)) {  
+      *Class = 'U';
+      printf(" DT does not match the reference value of %15.8E\n", dtref);
+    }
+  } else { 
+    printf(" Unknown class\n");
+  }
 
-  // if (*Class != 'U') {
-  //   printf(" Comparison of RMS-norms of residual\n");
-  // } else {
-  //   printf(" RMS-norms of residual\n");
-  // }
+  if (*Class != 'U') {
+    printf(" Comparison of RMS-norms of residual\n");
+  } else {
+    printf(" RMS-norms of residual\n");
+  }
 
-  // for (m = 0; m < 5; m++) {
-  //   if (*Class == 'U') {
-  //     printf("          %2d%20.13E\n", m+1, xcr[m]);
-  //   } else if (xcrdif[m] <= epsilon) {
-  //     printf("          %2d%20.13E%20.13E%20.13E\n", 
-  //         m+1, xcr[m], xcrref[m], xcrdif[m]);
-  //   } else { 
-  //     *verified = false;
-  //     printf(" FAILURE: %2d%20.13E%20.13E%20.13E\n",
-  //         m+1, xcr[m], xcrref[m], xcrdif[m]);
-  //   }
-  // }
+  for (m = 0; m < 5; m++) {
+    if (*Class == 'U') {
+      printf("          %2d%20.13E\n", m+1, xcr[m]);
+    } else if (xcrdif[m] <= epsilon) {
+      printf("          %2d%20.13E%20.13E%20.13E\n", 
+          m+1, xcr[m], xcrref[m], xcrdif[m]);
+    } else { 
+      *verified = false;
+      printf(" FAILURE: %2d%20.13E%20.13E%20.13E\n",
+          m+1, xcr[m], xcrref[m], xcrdif[m]);
+    }
+  }
 
-  // if (*Class != 'U') {
-  //   printf(" Comparison of RMS-norms of solution error\n");
-  // } else {
-  //   printf(" RMS-norms of solution error\n");
-  // }
+  if (*Class != 'U') {
+    printf(" Comparison of RMS-norms of solution error\n");
+  } else {
+    printf(" RMS-norms of solution error\n");
+  }
 
-  // for (m = 0; m < 5; m++) {
-  //   if (*Class == 'U') {
-  //     printf("          %2d%20.13E\n", m+1, xce[m]);
-  //   } else if (xcedif[m] <= epsilon) {
-  //     printf("          %2d%20.13E%20.13E%20.13E\n", 
-  //         m+1, xce[m], xceref[m], xcedif[m]);
-  //   } else {
-  //     *verified = false;
-  //     printf(" FAILURE: %2d%20.13E%20.13E%20.13E\n",
-  //         m+1, xce[m], xceref[m], xcedif[m]);
-  //   }
-  // }
+  for (m = 0; m < 5; m++) {
+    if (*Class == 'U') {
+      printf("          %2d%20.13E\n", m+1, xce[m]);
+    } else if (xcedif[m] <= epsilon) {
+      printf("          %2d%20.13E%20.13E%20.13E\n", 
+          m+1, xce[m], xceref[m], xcedif[m]);
+    } else {
+      *verified = false;
+      printf(" FAILURE: %2d%20.13E%20.13E%20.13E\n",
+          m+1, xce[m], xceref[m], xcedif[m]);
+    }
+  }
 
-  // if (*Class == 'U') {
-  //   printf(" No reference values provided\n");
-  //   printf(" No verification performed\n");
-  // } else if (*verified) {
-  //   printf(" Verification Successful\n");
-  // } else {
-  //   printf(" Verification failed\n");
-  // }
+  if (*Class == 'U') {
+    printf(" No reference values provided\n");
+    printf(" No verification performed\n");
+  } else if (*verified) {
+    printf(" Verification Successful\n");
+  } else {
+    printf(" Verification failed\n");
+  }
+
+  auto2_verify(Class, dt, xce, xcr);
 }

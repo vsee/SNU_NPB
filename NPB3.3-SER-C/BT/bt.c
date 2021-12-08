@@ -40,7 +40,7 @@
 
 #include "header.h"
 #include "timers.h"
-//#include "print_results.h"
+#include "print_results.h"
 
 /* common /global/ */
 double elapsed_time;
@@ -92,9 +92,9 @@ double tmp1, tmp2, tmp3;
 int main(int argc, char *argv[])
 {
   int i, niter, step;
-  // double navg, mflops, n3;
+  double navg, mflops, n3;
 
-  double tmax;//, t, trecs[t_last+1];
+  double tmax, t, trecs[t_last+1];
   logical verified;
   char Class;
   char *t_names[t_last+1];
@@ -122,11 +122,11 @@ int main(int argc, char *argv[])
     timeron = false;
   }
 
-  //printf("\n\n NAS Parallel Benchmarks (NPB3.3-SER-C) - BT Benchmark\n\n");
+  printf("\n\n NAS Parallel Benchmarks (NPB3.3-SER-C) - BT Benchmark\n\n");
 
   if ((fp = fopen("inputbt.data", "r")) != NULL) {
     int result;
-    //printf(" Reading from input file inputbt.data\n");
+    printf(" Reading from input file inputbt.data\n");
     result = fscanf(fp, "%d", &niter);
     while (fgetc(fp) != '\n');
     result = fscanf(fp, "%lf", &dt);
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
         &grid_points[0], &grid_points[1], &grid_points[2]);
     fclose(fp);
   } else {
-    //printf(" No input file inputbt.data. Using compiled defaults\n");
+    printf(" No input file inputbt.data. Using compiled defaults\n");
     niter = NITER_DEFAULT;
     dt    = DT_DEFAULT;
     grid_points[0] = PROBLEM_SIZE;
@@ -143,16 +143,16 @@ int main(int argc, char *argv[])
     grid_points[2] = PROBLEM_SIZE;
   }
 
-  // printf(" Size: %4dx%4dx%4d\n",
-  //     grid_points[0], grid_points[1], grid_points[2]);
-  // printf(" Iterations: %4d    dt: %10.6f\n", niter, dt);
-  // printf("\n");
+  printf(" Size: %4dx%4dx%4d\n",
+      grid_points[0], grid_points[1], grid_points[2]);
+  printf(" Iterations: %4d    dt: %10.6f\n", niter, dt);
+  printf("\n");
 
   if ( (grid_points[0] > IMAX) ||
        (grid_points[1] > JMAX) ||
        (grid_points[2] > KMAX) ) {
-    // printf(" %d, %d, %d\n", grid_points[0], grid_points[1], grid_points[2]);
-    // printf(" Problem size too big for compiled array sizes\n");
+    printf(" %d, %d, %d\n", grid_points[0], grid_points[1], grid_points[2]);
+    printf(" Problem size too big for compiled array sizes\n");
     return 0;
   }
 
@@ -178,9 +178,9 @@ int main(int argc, char *argv[])
   timer_start(1);
 
   for (step = 1; step <= niter; step++) {
-    // if ((step % 20) == 0 || step == 1) {
-    //   printf(" Time step %4d\n", step);
-    // }
+    if ((step % 20) == 0 || step == 1) {
+      printf(" Time step %4d\n", step);
+    }
 
     adi();
   }
@@ -190,48 +190,48 @@ int main(int argc, char *argv[])
 
   verify(niter, &Class, &verified);
 
-  // n3 = 1.0*grid_points[0]*grid_points[1]*grid_points[2];
-  // navg = (grid_points[0]+grid_points[1]+grid_points[2])/3.0;
-  // if(tmax != 0.0) {
-  //   mflops = 1.0e-6 * (double)niter *
-  //     (3478.8 * n3 - 17655.7 * (navg*navg) + 28023.7 * navg)
-  //     / tmax;
-  // } else {
-  //   mflops = 0.0;
-  // }
-  // print_results("BT", Class, grid_points[0], 
-  //               grid_points[1], grid_points[2], niter,
-  //               tmax, mflops, "          floating point", 
-  //               verified, NPBVERSION,COMPILETIME, CS1, CS2, CS3, CS4, CS5, 
-  //               CS6, "(none)");
+  n3 = 1.0*grid_points[0]*grid_points[1]*grid_points[2];
+  navg = (grid_points[0]+grid_points[1]+grid_points[2])/3.0;
+  if(tmax != 0.0) {
+    mflops = 1.0e-6 * (double)niter *
+      (3478.8 * n3 - 17655.7 * (navg*navg) + 28023.7 * navg)
+      / tmax;
+  } else {
+    mflops = 0.0;
+  }
+  print_results("BT", Class, grid_points[0], 
+                grid_points[1], grid_points[2], niter,
+                tmax, mflops, "          floating point", 
+                verified, NPBVERSION,COMPILETIME, CS1, CS2, CS3, CS4, CS5, 
+                CS6, "(none)");
 
-  //---------------------------------------------------------------------
+  // ---------------------------------------------------------------------
   // More timers
-  //---------------------------------------------------------------------
-  // if (timeron) {
-  //   for (i = 1; i <= t_last; i++) {
-  //     trecs[i] = timer_read(i);
-  //   }
+  // ---------------------------------------------------------------------
+  if (timeron) {
+    for (i = 1; i <= t_last; i++) {
+      trecs[i] = timer_read(i);
+    }
 
-  //   if (tmax == 0.0) tmax = 1.0;
-  //   printf("  SECTION   Time (secs)\n");
-  //   for (i = 1; i <= t_last; i++) {
-  //     printf("  %-8s:%9.3f  (%6.2f%%)\n", 
-  //         t_names[i], trecs[i], trecs[i]*100./tmax);
-  //     if (i == t_rhs) {
-  //       t = trecs[t_rhsx] + trecs[t_rhsy] + trecs[t_rhsz];
-  //       printf("    --> %8s:%9.3f  (%6.2f%%)\n", "sub-rhs", t, t*100./tmax);
-  //       t = trecs[t_rhs] - t;
-  //       printf("    --> %8s:%9.3f  (%6.2f%%)\n", "rest-rhs", t, t*100./tmax);
-  //     } else if (i==t_zsolve) {
-  //       t = trecs[t_zsolve] - trecs[t_rdis1] - trecs[t_rdis2];
-  //       printf("    --> %8s:%9.3f  (%6.2f%%)\n", "sub-zsol", t, t*100./tmax);
-  //     } else if (i==t_rdis2) {
-  //       t = trecs[t_rdis1] + trecs[t_rdis2];
-  //       printf("    --> %8s:%9.3f  (%6.2f%%)\n", "redist", t, t*100./tmax);
-  //     }
-  //   }
-  // }
+    if (tmax == 0.0) tmax = 1.0;
+    printf("  SECTION   Time (secs)\n");
+    for (i = 1; i <= t_last; i++) {
+      printf("  %-8s:%9.3f  (%6.2f%%)\n", 
+          t_names[i], trecs[i], trecs[i]*100./tmax);
+      if (i == t_rhs) {
+        t = trecs[t_rhsx] + trecs[t_rhsy] + trecs[t_rhsz];
+        printf("    --> %8s:%9.3f  (%6.2f%%)\n", "sub-rhs", t, t*100./tmax);
+        t = trecs[t_rhs] - t;
+        printf("    --> %8s:%9.3f  (%6.2f%%)\n", "rest-rhs", t, t*100./tmax);
+      } else if (i==t_zsolve) {
+        t = trecs[t_zsolve] - trecs[t_rdis1] - trecs[t_rdis2];
+        printf("    --> %8s:%9.3f  (%6.2f%%)\n", "sub-zsol", t, t*100./tmax);
+      } else if (i==t_rdis2) {
+        t = trecs[t_rdis1] + trecs[t_rdis2];
+        printf("    --> %8s:%9.3f  (%6.2f%%)\n", "redist", t, t*100./tmax);
+      }
+    }
+  }
 
   return 0;
 }

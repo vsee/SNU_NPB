@@ -109,5 +109,6 @@ build_benchmark sp \
      set_constants.c adi.c rhs.c
      x_solve.c ninvr.c y_solve.c pinvr.c
      z_solve.c tzetar.c add.c txinvr.c error.c verify.c" \
-    "print_results.bc c_timers.bc wtime.bc"
+    "print_results.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 

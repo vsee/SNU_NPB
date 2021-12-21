@@ -20,17 +20,15 @@ LFLAGS=
 TARGETS="bt cg ep ft is lu mg sp"
 CLASS=S
 
-# configure extension file here for testing
-EXTENSION=
-
-printf "========= BUILDING VANILLA TARGETS ==========================================\n"
+printf "========= BUILDING AUTO2 TARGETS ==========================================\n"
 for t in $TARGETS; do
     printf "\n\nBuilding auto2 binaries for $t and class $CLASS\n"
     ./build.sh $t $CLASS $HOME $MBIN $BLD $VCLANG $MCLANG "$CFLAGS" "$LFLAGS" "$EXTENSION"
 done
 
 
-printf "\n\n========= BUILDING AUTO2 TARGETS ============================================\n"
+printf "\n\n========= BUILDING VANILLA TARGETS ============================================\n"
+# extension from config file unset to allow vanilla builds
 EXTENSION=""
 
 for t in $TARGETS; do

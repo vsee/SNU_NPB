@@ -1,5 +1,10 @@
-The build process in this directory allows NAS benchmarks to be built in a way where all object files are compiled into bitcode and linked into one big bitcode file using a vanilla clang compiler without optimisations.
+The build process in this directory allows NAS benchmarks to be built in a way where object files are build for individual benchmarks. A different compiler can be used for object file generation and final linking.
 
-The vanilla compiler can be specified in the env.config which is needed for both scripts.
+The build process allows for verification files to be build using a vanilla compiler before being linked into the final binary. This way modifications will not affect verification code.
 
-For test purposes, the binaries can be build as well which can be done with a vanilla optimiser or an instrumented one. Extension libraries do not need to be loaded but can be configured using the OPT_FLAGS variable.
+For test purposes, the ```build_all.sh``` script can be used to build all NAS benchmarks using the ```build.sh``` script. 
+It builds a baseline using only the vanillla clang compiler and an auto2 version using a modified compiler for object file generation and a vanilla compiler for final linking. 
+
+The vanilla and modified compilers can be specified in the env.config.
+
+Extension libraries do not need to be loaded but can be configured using the EXTENSIONS variable in ```build_all.sh```.

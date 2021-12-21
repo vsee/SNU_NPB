@@ -6,11 +6,12 @@ NAME=$1 # name of the benchmark
 CLASS=$2 # benchmark input class
 HOME=$3 # NAS benchmark suite home directory
 BIN=$4 # binary file directory
-VCLANG=$5 # vanilla compiler
-MCLANG=$6 # modified compiler
-EXTRA_CFLAGS=$7 # additional compiler flags
-EXTRA_LFLAGS=$8 # additional linker flags
-EXTENSION=$9 # auto2 compiler extension library
+BLD=$5 # build directory
+VCLANG=$6 # vanilla compiler
+MCLANG=$7 # modified compiler
+EXTRA_CFLAGS=$8 # additional compiler flags
+EXTRA_LFLAGS=$9 # additional linker flags
+EXTENSION=${10} # auto2 compiler extension library
 
 if [ ! -d $HOME ] ; then
     echo "ERROR: Specified benchmark home directory does not exist $HOME"
@@ -19,6 +20,11 @@ fi
 
 if [ ! -d $BIN ] ; then
     echo "ERROR: Specified binary directory does not exist $BIN"
+    exit 1
+fi
+
+if [ ! -d $BLD ] ; then
+    echo "ERROR: Specified build directory does not exist $BLD"
     exit 1
 fi
 
@@ -32,12 +38,10 @@ if [ ! -f $MCLANG ] ; then
     exit 1
 fi
 
-if [ ! -z $EXTENSION && ! -f $EXTENSION ] ; then
+if [ ! -z "$EXTENSION" ] && [ ! -f $EXTENSION ] ; then
     echo "ERROR: Specified extension file not found $EXTENSION"
     exit 1
 fi
-
-WD=`pwd`
 
 SYS=$HOME/sys
 COMMON=$HOME/common
@@ -46,57 +50,61 @@ DIR=$HOME/${NAME^^} # upper case name for benchmark source directory
 CFLAGS="-Wall -mcmodel=medium $EXTRA_CFLAGS"
 LFLAGS="-mcmodel=medium -lm $EXTRA_LFLAGS"
 
-if [[ ! -z $EXTENSION ]]; then
+if [[ ! -z "$EXTENSION" ]]; then
     EXT_FLAGS="-Xclang -load -Xclang $EXTENSION"
 else
     EXT_FLAGS=""
 fi
+
+function execute {
+    CMD=$1
+    echo $CMD
+    $CMD   
+}
 
 function build_benchmark {
     SRC=$1 # list of benchmark source files
     CMN=$2 # list of common source files
     VFY=$3 # list of source files used for verification
 
-    printf "\n\nBuilding bitcode for $NAME and Class $CLASS\n"
+    printf "## Building binary for $NAME and Class $CLASS in $BLD\n"
 
-    cd $DIR
-    ../sys/setparams $NAME $CLASS
-    cd $WD
+    # build param tool
+    # generate header parameters from make config
+    # make config is irrelevant for our purposes though
+    execute "gcc -o $SYS/setparams $SYS/setparams.c"
+
+    execute "cd $DIR"
+    execute "../sys/setparams $NAME $CLASS"
+    execute "cd $BLD"
     
-    echo "building benchmark objects ..."
+    printf "\nbuilding benchmark objects ...\n"
     for file in $SRC; do
-        $MCLANG $CFLAGS $EXT_FLAGS -c -I$COMMON -I$DIR $DIR/$file -o $DIR/${file//\.c/\.o}
+        execute "$MCLANG $CFLAGS $EXT_FLAGS -c -I$COMMON -I$DIR $DIR/$file"
     done
     
-    echo "building common objects ..."
+    printf "\nbuilding common objects ...\n"
     for file in $CMN; do
-        $MCLANG $CFLAGS $EXT_FLAGS -c -I$COMMON $COMMON/$file -o $COMMON/${file//\.c/\.o}
+        execute "$MCLANG $CFLAGS $EXT_FLAGS -c -I$COMMON $COMMON/$file"
     done
     
     # verification files are not build using a modified compiler
-    echo "building external verification objects ..."
+    printf "\nbuilding external verification objects ...\n"
     if [[ ! -z $VFY ]]; then
         for file in $VFY; do
-            $VCLANG $CFLAGS -c -I$DIR $DIR/$file -o $DIR/${file//\.c/\.o}
+            execute "$VCLANG $CFLAGS -c -I$DIR $DIR/$file"
         done
     fi
 
     TARGET=$BIN/$NAME.$CLASS.x
-    echo "linking final binary to $TARGET"
-    $VCLANG $LFLAGS -o $TARGET ${SRC//\.c/\.o} ${CMN//\.c/\.o} ${VFY//\.c/\.o}
+    printf "\nlinking final binary to $TARGET\n"
+    execute "$VCLANG $LFLAGS -o $TARGET ${SRC//\.c/\.o} ${CMN//\.c/\.o} ${VFY//\.c/\.o}"
 }
 
 # class must be upper case
 CLASS=${CLASS^^}
 # name must be lower case
 NAME=${NAME,,}
-
-set -x
-
-# build param tool
-# generate header parameters from make config
-# make config is irrelevant for our purposes though
-gcc -o $SYS/setparams $SYS/setparams.c
 
 case "$NAME" in
 
@@ -155,18 +163,3 @@ case "$NAME" in
    ;;
 
 esac
-
-set +x
-
-
-
-
-
-
-
-
-
-
-
-
-

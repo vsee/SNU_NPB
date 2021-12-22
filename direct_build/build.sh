@@ -119,7 +119,7 @@ case "$NAME" in
 "mg") build_benchmark \
     "mg.c" \
     "print_results.c randdp.c c_timers.c wtime.c" \
-    ""
+    "auto2_verify.c"
     ;;
 "cg") build_benchmark \
     "cg.c" \

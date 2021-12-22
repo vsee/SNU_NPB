@@ -17,8 +17,7 @@ mkdir -p $VBIN $MBIN $BLD
 CFLAGS="-Oz -fno-crash-diagnostics"
 LFLAGS=
 
-#TARGETS="bt cg ep ft is lu mg sp"
-TARGETS="cg"
+TARGETS="bt cg ep ft is lu mg sp"
 CLASS=S
 
 printf "========= BUILDING AUTO2 TARGETS ==========================================\n"

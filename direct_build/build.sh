@@ -129,7 +129,7 @@ case "$NAME" in
 "ep") build_benchmark \
     "ep.c" \
     "print_results.c randdp.c c_timers.c wtime.c" \
-    ""
+    "auto2_verify.c"
     ;;
 "ft") build_benchmark \
     "appft.c auxfnct.c fft3d.c mainft.c verify.c" \

@@ -7,10 +7,11 @@ include ../config/make.def
 include ../sys/make.common
 
 OBJS = ep.o \
-			 ${COMMON}/print_results.o \
-			 ${COMMON}/${RAND}.o \
-       ${COMMON}/c_timers.o \
-			 ${COMMON}/wtime.o
+	auto2_verify.o \
+	${COMMON}/print_results.o \
+	${COMMON}/${RAND}.o \
+	${COMMON}/c_timers.o \
+	${COMMON}/wtime.o
 
 
 ${PROGRAM}: config ${OBJS}

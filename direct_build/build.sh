@@ -148,7 +148,7 @@ case "$NAME" in
     jacld.c blts.c jacu.c buts.c error.c
     pintgr.c verify.c" \
     "print_results.c c_timers.c wtime.c" \
-    ""
+    "auto2_verify.c"
     ;;
 "sp") build_benchmark \
     "sp.c initialize.c exact_solution.c exact_rhs.c

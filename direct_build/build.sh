@@ -124,7 +124,7 @@ case "$NAME" in
 "cg") build_benchmark \
     "cg.c" \
     "print_results.c randdp.c c_timers.c wtime.c" \
-    ""
+    "auto2_verify.c"
     ;;
 "ep") build_benchmark \
     "ep.c" \

@@ -121,6 +121,9 @@ static int icnvrt(double x, int ipwr2);
 static void vecset(int n, double v[], int iv[], int *nzv, int i, double val);
 //---------------------------------------------------------------------
 
+void auto2_verify(char *Class, double zeta);
+
+//---------------------------------------------------------------------
 
 int main(int argc, char *argv[])
 {
@@ -358,6 +361,8 @@ int main(int argc, char *argv[])
     printf(" Problem size unknown\n");
     printf(" NO VERIFICATION PERFORMED\n");
   }
+
+  auto2_verify(&Class, zeta);
 
   if (t != 0.0) {
     mflops = (double)(2*NITER*NA)

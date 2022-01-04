@@ -36,6 +36,7 @@
 
 #include "global.h"
 
+void auto2_verify(int n1, int n2, int n3, int nt, dcomplex cksum[nt+1]);
 
 // FT verification routine.
 void verify(int n1, int n2, int n3, int nt, dcomplex cksum[nt+1],
@@ -196,5 +197,7 @@ void verify(int n1, int n2, int n3, int nt, dcomplex cksum[nt+1],
       printf(" Verification test for FT failed\n");
     }
   }
+
+  auto2_verify(n1, n2, n3, nt, cksum);
 }
 

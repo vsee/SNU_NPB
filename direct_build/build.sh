@@ -134,7 +134,7 @@ case "$NAME" in
 "ft") build_benchmark \
     "appft.c auxfnct.c fft3d.c mainft.c verify.c" \
     "print_results.c randdp.c c_timers.c wtime.c" \
-    ""
+    "auto2_verify.c"
     ;;
 "is") build_benchmark \
     "is.c" \

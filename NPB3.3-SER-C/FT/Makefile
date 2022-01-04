@@ -6,7 +6,7 @@ include ../config/make.def
 
 include ../sys/make.common
 
-OBJS = appft.o auxfnct.o fft3d.o mainft.o verify.o \
+OBJS = appft.o auxfnct.o fft3d.o mainft.o verify.o auto2_verify.o \
        ${COMMON}/${RAND}.o ${COMMON}/print_results.o \
        ${COMMON}/c_timers.o ${COMMON}/wtime.o
 

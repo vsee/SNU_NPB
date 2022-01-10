@@ -139,7 +139,7 @@ case "$NAME" in
 "is") build_benchmark \
     "is.c" \
     "c_print_results.c c_timers.c wtime.c" \
-    ""
+    "auto2_verify.c"
     ;;
 "lu") build_benchmark \
     "lu.c read_input.c \

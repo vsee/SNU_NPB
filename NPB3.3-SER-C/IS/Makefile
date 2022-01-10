@@ -6,7 +6,7 @@ include ../config/make.def
 
 include ../sys/make.common
 
-OBJS = is.o \
+OBJS = is.o auto2_verify.c \
        ${COMMON}/c_print_results.o \
        ${COMMON}/c_timers.o \
        ${COMMON}/c_wtime.o

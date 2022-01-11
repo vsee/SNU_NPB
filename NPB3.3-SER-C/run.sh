@@ -13,7 +13,7 @@ mkdir -p result
 #    end
 #end
 
-foreach benchmark ( sp )
+foreach benchmark ( ft mg cg lu bt is ep sp )
     foreach class ( S )
         echo "running $benchmark.$class. (SER-C)"
         bin/$benchmark.$class.x > result/$benchmark.$class.out

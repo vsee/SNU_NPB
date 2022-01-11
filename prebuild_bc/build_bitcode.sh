@@ -63,12 +63,14 @@ function build_benchmark {
 build_benchmark mg \
     $HOME/MG \
     "mg.c" \
-    "print_results.bc randdp.bc c_timers.bc wtime.bc"
+    "print_results.bc randdp.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark cg \
     $HOME/CG \
     "cg.c" \
-    "print_results.bc randdp.bc c_timers.bc wtime.bc"
+    "print_results.bc randdp.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark bt \
     $HOME/BT \
@@ -82,17 +84,20 @@ build_benchmark bt \
 build_benchmark ep \
     $HOME/EP \
     "ep.c" \
-    "print_results.bc randdp.bc c_timers.bc wtime.bc"
+    "print_results.bc randdp.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark ft \
     $HOME/FT \
     "appft.c auxfnct.c fft3d.c mainft.c verify.c" \
-    "print_results.bc randdp.bc c_timers.bc wtime.bc"
+    "print_results.bc randdp.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark is \
     $HOME/IS \
     "is.c" \
-    "c_print_results.bc c_timers.bc c_wtime.bc"
+    "c_print_results.bc c_timers.bc c_wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark lu \
     $HOME/LU \
@@ -101,7 +106,8 @@ build_benchmark lu \
     erhs.c ssor.c rhs.c l2norm.c
     jacld.c blts.c jacu.c buts.c error.c
     pintgr.c verify.c" \
-    "print_results.bc c_timers.bc wtime.bc"
+    "print_results.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark sp \
     $HOME/SP \

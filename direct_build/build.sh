@@ -59,7 +59,7 @@ fi
 function execute {
     CMD=$1
     echo $CMD
-    $CMD   
+    $CMD
 }
 
 function build_benchmark {
@@ -77,17 +77,17 @@ function build_benchmark {
     execute "cd $DIR"
     execute "../sys/setparams $NAME $CLASS"
     execute "cd $BLD"
-    
+
     printf "\nbuilding benchmark objects ...\n"
     for file in $SRC; do
         execute "$MCLANG $CFLAGS $EXT_FLAGS -c -I$COMMON -I$DIR $DIR/$file"
     done
-    
+
     printf "\nbuilding common objects ...\n"
     for file in $CMN; do
         execute "$MCLANG $CFLAGS $EXT_FLAGS -c -I$COMMON $COMMON/$file"
     done
-    
+
     # verification files are not build using a modified compiler
     printf "\nbuilding external verification objects ...\n"
     if [[ ! -z $VFY ]]; then
@@ -98,7 +98,7 @@ function build_benchmark {
 
     TARGET=$BIN/$NAME.$CLASS.x
     printf "\nlinking final binary to $TARGET\n"
-    execute "$VCLANG $LFLAGS -o $TARGET ${SRC//\.c/\.o} ${CMN//\.c/\.o} ${VFY//\.c/\.o}"
+    execute "$VCLANG $LFLAGS -o $TARGET ${SRC//.c/.o} ${CMN//.c/.o} ${VFY//.c/.o}"
 }
 
 # class must be upper case

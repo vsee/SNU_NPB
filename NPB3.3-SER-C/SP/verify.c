@@ -36,6 +36,8 @@
 
 #include "header.h"
 
+void auto2_verify(char *Class, double dt, double xce[5], double xcr[5]);
+
 //---------------------------------------------------------------------
 // verification routine                         
 //---------------------------------------------------------------------
@@ -337,5 +339,7 @@ void verify(int no_time_steps, char *Class, logical *verified)
   } else {
     printf(" Verification failed\n");
   }
+
+  auto2_verify(Class, dt, xce, xcr);
 }
 

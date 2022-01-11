@@ -10,7 +10,7 @@ include ../sys/make.common
 OBJS = lu.o read_input.o \
        domain.o setcoeff.o setbv.o exact.o setiv.o \
        erhs.o ssor$(VEC).o rhs$(VEC).o l2norm.o \
-       jacld.o blts$(VEC).o jacu.o buts$(VEC).o error.o \
+       jacld.o blts$(VEC).o jacu.o buts$(VEC).o error.o auto2_verify.o \
        pintgr.o verify.o ${COMMON}/print_results.o \
        ${COMMON}/c_timers.o ${COMMON}/wtime.o
 

@@ -7,6 +7,7 @@ include ../config/make.def
 include ../sys/make.common
 
 OBJS = cg.o \
+       auto2_verify.c \
        ${COMMON}/print_results.o  \
        ${COMMON}/${RAND}.o \
        ${COMMON}/c_timers.o \

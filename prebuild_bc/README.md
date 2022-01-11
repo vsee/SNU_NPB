@@ -1,4 +1,4 @@
-This is an optimised version of the NAS benchmarks where all object files are compiled into bitcode and linked into one big bitcode file using a vanilla clang compiler.
+The build process in this directory allows NAS benchmarks to be built in a way where all object files are compiled into bitcode and linked into one big bitcode file using a vanilla clang compiler without optimisations.
 
 The vanilla compiler can be specified in the env.config which is needed for both scripts.
 

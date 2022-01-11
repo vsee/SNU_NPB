@@ -69,6 +69,8 @@ static void bubble(double ten[][2], int j1[][2], int j2[][2], int j3[][2],
 static void zero3(void *oz, int n1, int n2, int n3);
 
 
+void auto2_verify(char* Class, double rnm2);
+
 //-------------------------------------------------------------------------c
 // These arrays are in common because they are quite large
 // and probably shouldn't be allocated on the stack. They
@@ -324,6 +326,8 @@ int main()
   } else {
     mflops = 0.0;
   }
+
+  auto2_verify(&Class, rnm2);
 
   print_results("MG", Class, nx[lt], ny[lt], nz[lt], 
                 nit, t,

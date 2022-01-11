@@ -69,6 +69,8 @@ static double x[2*NK];
 static double q[NQ]; 
 
 
+void auto2_verify(char Class, double sx, double sy);
+
 int main() 
 {
   double Mops, t1, t2, t3, t4, x1, x2;
@@ -263,6 +265,8 @@ int main()
   for (i = 0; i < NQ; i++) {
     printf("%3d%15.0lf\n", i, q[i]);
   }
+
+  auto2_verify(CLASS, sx, sy);
 
   print_results("EP", CLASS, M+1, 0, 0, nit,
       tm, Mops, 

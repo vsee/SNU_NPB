@@ -213,7 +213,17 @@ INT_TYPE test_index_array[TEST_ARRAY_SIZE],
          D_test_rank_array[TEST_ARRAY_SIZE] = 
                              {1,36538729,1978098519,2145192618,2147425337};
 
+/************************/
+/* AUTO2 VERIFICATION   */
+/************************/
+void auto2_partial_verify(
+    char Class, 
+    int iteration, 
+    INT_TYPE *key_buff_ptr,
+    INT_TYPE *partial_verify_vals);
 
+void auto2_full_verify(
+    INT_TYPE* key_array);
 
 /***********************/
 /* function prototypes */
@@ -420,6 +430,7 @@ void full_verify( void )
         passed_verification++;
            
 
+    auto2_full_verify(key_array);
 }
 
 
@@ -626,6 +637,7 @@ void rank( int iteration )
         }
     }
 
+    auto2_partial_verify(CLASS, iteration, key_buff_ptr, partial_verify_vals);
 
 
 

@@ -2,7 +2,7 @@
 
 mkdir -p bin
 
-foreach benchmark ( sp )
+foreach benchmark ( sp bt cg ep ft is lu mg )
     foreach class ( S )
         echo "compiling $benchmark.$class. (SER-C)"
         make $benchmark CLASS=$class

@@ -35,6 +35,8 @@
 #include <math.h>
 #include "applu.incl"
 
+void auto2_verify(char *Class, double dt, double xce[5], double xcr[5], double xci);
+
 //---------------------------------------------------------------------
 // verification routine                         
 //---------------------------------------------------------------------
@@ -380,5 +382,7 @@ void verify(double xcr[5], double xce[5], double xci,
   } else {
     printf(" Verification failed\n");
   }
+
+  auto2_verify(Class, dt, xce, xcr, xci);
 }
 

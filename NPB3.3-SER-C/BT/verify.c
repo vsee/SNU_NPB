@@ -35,6 +35,8 @@
 #include <math.h>
 #include "header.h"
 
+void auto2_verify(char *Class, double dt, double xce[5], double xcr[5]);
+
 //---------------------------------------------------------------------
 // verification routine                         
 //---------------------------------------------------------------------
@@ -279,9 +281,9 @@ void verify(int no_time_steps, char *Class, logical *verified)
     xcedif[m] = fabs((xce[m]-xceref[m])/xceref[m]);
   }
 
-  //---------------------------------------------------------------------
+  // ---------------------------------------------------------------------
   // Output the comparison of computed results to known cases.
-  //---------------------------------------------------------------------
+  // ---------------------------------------------------------------------
   if (*Class != 'U') {
     printf(" Verification being performed for class %c\n", *Class);
     printf(" accuracy setting for epsilon = %20.13E\n", epsilon);
@@ -340,4 +342,6 @@ void verify(int no_time_steps, char *Class, logical *verified)
   } else {
     printf(" Verification failed\n");
   }
+
+  auto2_verify(Class, dt, xce, xcr);
 }

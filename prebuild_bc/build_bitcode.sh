@@ -10,7 +10,7 @@ SYS=$HOME/sys
 COMMON=$HOME/common
 
 CFLAGS="-O0 -g0 -Xclang -disable-O0-optnone -fno-crash-diagnostics -Wall -mcmodel=medium"
-
+CFLAGS_OPT="-Oz -fno-crash-diagnostics -Wall -mcmodel=medium"
 
 BLD=`pwd`/build
 OUT=`pwd`/bc_out
@@ -37,6 +37,9 @@ function build_benchmark {
     DIR=$2
     SRC=$3
     CMN=$4
+    VFY=$5
+
+    echo "Building bitcode for $NAME"
 
     cd $DIR
     $SYS/setparams $NAME S
@@ -49,17 +52,25 @@ function build_benchmark {
     BC=${SRC//\.c/\.bc}
     
     $VLINK $BC $CMN -o $OUT/$NAME.S.bc
+
+    if [[ ! -z $VFY ]]; then
+        TARGET=$OUT/${NAME}_verify.S.o
+        echo "Building external verification $TARGET"
+        $VCLANG $CFLAGS_OPT -c $DIR/$VFY -o $TARGET
+    fi
 }
 
 build_benchmark mg \
     $HOME/MG \
     "mg.c" \
-    "print_results.bc randdp.bc c_timers.bc wtime.bc"
+    "print_results.bc randdp.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark cg \
     $HOME/CG \
     "cg.c" \
-    "print_results.bc randdp.bc c_timers.bc wtime.bc"
+    "print_results.bc randdp.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark bt \
     $HOME/BT \
@@ -67,22 +78,26 @@ build_benchmark bt \
      set_constants.c adi.c  rhs.c
      x_solve.c y_solve.c solve_subs.c
      z_solve.c add.c error.c verify.c" \
-    "print_results.bc c_timers.bc wtime.bc"
+    "c_timers.bc wtime.bc print_results.bc" \
+    "auto2_verify.c"
 
 build_benchmark ep \
     $HOME/EP \
     "ep.c" \
-    "print_results.bc randdp.bc c_timers.bc wtime.bc"
+    "print_results.bc randdp.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark ft \
     $HOME/FT \
     "appft.c auxfnct.c fft3d.c mainft.c verify.c" \
-    "print_results.bc randdp.bc c_timers.bc wtime.bc"
+    "print_results.bc randdp.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark is \
     $HOME/IS \
     "is.c" \
-    "c_print_results.bc c_timers.bc c_wtime.bc"
+    "c_print_results.bc c_timers.bc c_wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark lu \
     $HOME/LU \
@@ -91,7 +106,8 @@ build_benchmark lu \
     erhs.c ssor.c rhs.c l2norm.c
     jacld.c blts.c jacu.c buts.c error.c
     pintgr.c verify.c" \
-    "print_results.bc c_timers.bc wtime.bc"
+    "print_results.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 
 build_benchmark sp \
     $HOME/SP \
@@ -99,5 +115,6 @@ build_benchmark sp \
      set_constants.c adi.c rhs.c
      x_solve.c ninvr.c y_solve.c pinvr.c
      z_solve.c tzetar.c add.c txinvr.c error.c verify.c" \
-    "print_results.bc c_timers.bc wtime.bc"
+    "print_results.bc c_timers.bc wtime.bc" \
+    "auto2_verify.c"
 

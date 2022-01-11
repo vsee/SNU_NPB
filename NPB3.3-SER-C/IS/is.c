@@ -222,7 +222,8 @@ void auto2_partial_verify(
     INT_TYPE *key_buff_ptr,
     INT_TYPE *partial_verify_vals);
 
-
+void auto2_full_verify(
+    INT_TYPE* key_array);
 
 /***********************/
 /* function prototypes */
@@ -429,6 +430,7 @@ void full_verify( void )
         passed_verification++;
            
 
+    auto2_full_verify(key_array);
 }
 
 

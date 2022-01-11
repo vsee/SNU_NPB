@@ -68,11 +68,17 @@ void auto2_partial_verify(
     }
 }
 
-void auto2_full_verify(char Class) {
+void auto2_full_verify(INT_TYPE* key_array) {
+    INT_TYPE    i, j;
 
-    if (Class != 'S') {
-        printf("AUTO2: Invalid workload class %c used for verification.\n", Class);
-        return;
+    j = 0;
+    for( i=1; i<NUM_KEYS; i++ )
+        if( key_array[i-1] > key_array[i] )
+            j++;
+
+    if( j != 0 ) {
+        printf("AUTO2 Verification failed.\n");
+    } else {
+        printf("AUTO2 Verification successful.\n");
     }
-
 }

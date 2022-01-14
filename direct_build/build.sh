@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO somehow print all output (maybe verbose?)
-
 NAME=$1 # name of the benchmark
 CLASS=$2 # benchmark input class
 HOME=$3 # NAS benchmark suite home directory

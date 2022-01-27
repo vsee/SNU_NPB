@@ -5,6 +5,6 @@ The build process allows for verification files to be build using a vanilla comp
 For test purposes, the ```build_all.sh``` script can be used to build all NAS benchmarks using the ```build.sh``` script. 
 It builds a baseline using only the vanillla clang compiler and an auto2 version using a modified compiler for object file generation and a vanilla compiler for final linking. 
 
-The vanilla and modified compilers can be specified in the env.config.
+The vanilla and modified compilers must be specified in the env.config.
 
 Extension libraries do not need to be loaded but can be configured using the EXTENSIONS variable in ```build_all.sh```.

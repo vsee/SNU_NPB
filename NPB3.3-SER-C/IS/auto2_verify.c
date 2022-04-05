@@ -37,9 +37,11 @@ void auto2_partial_verify(
         return;
     }
 
+    printf("AUTO2 Data dump: ");
     for( i=0; i<TEST_ARRAY_SIZE; i++ )
     {
         k = partial_verify_vals[i];          /* test vals were put here */
+        printf("%d ", k);
         if( 0 < k  &&  k <= NUM_KEYS-1 )
         {
             INT_TYPE key_rank = key_buff_ptr[k-1];
@@ -62,6 +64,8 @@ void auto2_partial_verify(
             }
         }
     }
+    printf("\n");
+
 
     if( passed_verification != 5 /* TEST_ARRAY_SIZE? */ ) {
         printf("AUTO2 Partial verification failed.\n");
@@ -72,9 +76,11 @@ void auto2_full_verify(INT_TYPE* key_array) {
     INT_TYPE    i, j;
 
     j = 0;
-    for( i=1; i<NUM_KEYS; i++ )
-        if( key_array[i-1] > key_array[i] )
+    for( i=1; i<NUM_KEYS; i++ ) {
+        if( key_array[i-1] > key_array[i] ) {
             j++;
+        }
+    }
 
     if( j != 0 ) {
         printf("AUTO2 Verification failed.\n");

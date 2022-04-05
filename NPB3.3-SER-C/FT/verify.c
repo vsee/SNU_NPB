@@ -183,8 +183,13 @@ void verify(int n1, int n2, int n3, int nt, dcomplex cksum[nt+1],
   // Verification test for results.
   if (*verified) {
     for (kt = 1; kt <= nt; kt++) {
-      err = dcmplx_abs(dcmplx_div(dcmplx_sub(cksum[kt], cexpd[kt]),
-                                  cexpd[kt]));
+      dcomplex sub_res = dcmplx_sub(cksum[kt], cexpd[kt]);
+      printf("kt=%d    Sub Res=%22.12E%22.12E\n", kt, sub_res.real, sub_res.imag);
+      dcomplex div_res = dcmplx_div(sub_res, cexpd[kt]);
+      printf("kt=%d    Div Res=%22.12E%22.12E\n", kt, div_res.real, div_res.imag);      
+      err = dcmplx_abs(div_res);
+      printf("kt=%d    Abs Err=%22.12E\n", kt, err);
+
       if (!(err <= epsilon)) {
         *verified = false;
         break;
